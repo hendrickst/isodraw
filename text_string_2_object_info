@@ -1,0 +1,13 @@
+Macro change_name_in_object_info
+    Define el as Element
+    Define Temp as string
+
+    Select if Type is "Text"
+    el = ActiveDoc.FirstSelectedElement
+    While (Exists(el) = true)
+        Temp = el.text.string
+        el.Info.Name = Temp
+        el = el.NextSelectedElement
+    End While
+    Select None
+End Macro
