@@ -1,0 +1,56 @@
+Macro Export_CGM
+#Define variables.
+    Define FR as Float
+    Define FT as Float
+    Define el as Element
+    Define IamHere as String
+    Define Path as String
+
+#Grabs current file location and saves.    
+    IamHere = ActiveDoc.Path
+    Save IamHere
+    
+#Determines frame extent.	
+    FR = ActiveDoc.window.pageX
+    FT = ActiveDoc.window.pageY
+	
+#Creates temporary rectangle the same dimensions of frame.
+    Create Rectangle 0 0 FR 0 FR FT 0 FT
+    el = activeDoc.firstSelectedElement
+    Create Object_Info el
+    Create Object_Attribute "Flag" "String" el
+    el.info.attributes["Flag"].value = "Temp"
+
+#Select everything but temporary rectangle.
+    Select If Object_Attribute is not equal to "Flag"
+
+#Mask content based on temporary rectangle.
+    Mask at FR FT
+
+#Clear selection prior to export (duplicate function call to be safe).
+    Select None
+    Select None
+    
+***** EXPORT OPTIONS *****    
+                    #Perform export. You can specify the destination here. You could potentially use a GET command to allow the user to enter a path but that would a manual typing which would be error prone.
+                        Export stripFileName(activeDoc.path) + stripExt(activeDoc.name) + ".cgm" "CGM"
+                    
+                    ###Or to put a specified path...
+                        #Export "C:\temp\" + stripExt(activeDoc.name) + ".cgm" "CGM"
+                    
+                    ###Or to prompt for user input.
+                        #Path = Get String "Enter the location to save the CGM to:"
+                        #Export Path "CGM"
+***** END OF EXPORT OPTIONS *****
+
+#Closes the file dispensing of all changes.
+    ActiveDoc.Modified = 0
+    Close
+
+#Reopens saved copy reverting to original copy.
+    Open IamHere
+
+#Changes file to show it has not been modified.
+    ActiveDoc.Modified = 0
+    
+End Macro
