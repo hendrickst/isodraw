@@ -1,0 +1,14 @@
+Macro CGM_Export
+     #Various cgm export settings. Listed only a few that might help.
+      #Sets export profile for cgm.
+      app.cgm.profile = $CGM_Profile.ATA_GREXCHANGE_2_9
+      
+      #Sets encoding to text.
+      app.cgm.profile = 2
+
+      #CGM version
+      app.cgm.version = 1  
+
+      #Exports cgm to the same directory as the source file.
+      Export StripExt(ActiveDoc.Path) + ".cgm" CGM
+End Macro
