@@ -1,0 +1,5 @@
+Macro Text_to_Helvetica
+    Select if Type is "Text"
+    Text Font "Helvetica"
+    Select None
+End Macro
