@@ -1,0 +1,21 @@
+Macro Remove_Object_Tips
+    #Declare variables
+    Define el as Element   
+
+    #Clear existing selection.
+    Select None   
+
+    #Select all objects with object tips populated.
+    Select if Object_tip is not equal to ""   
+
+    #Loops through objects removing object tips.
+    el = ActiveDoc.firstSelectedElement   
+
+    While(exists(el) = True)
+        el.info.tip = ""
+        el = el.NextSibling
+    End While
+  
+    #Clears selection.
+        Select None
+End Macro
